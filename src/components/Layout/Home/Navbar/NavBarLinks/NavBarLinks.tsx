@@ -1,5 +1,5 @@
 import React from 'react'
-import { navItems } from '@/public/Data/nav'
+import { navItems } from '@/public/data/nav'
 import classes from '../navbar.module.css'
 import Link from "next/link"
 
