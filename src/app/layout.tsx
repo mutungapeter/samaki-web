@@ -1,3 +1,4 @@
+'use client';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import type { Metadata } from "next";
@@ -9,10 +10,12 @@ import theme from "../theme/theme";
 const inter = Inter({ subsets: ["latin"] });
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from '@mui/material/styles';
-export const metadata: Metadata = {
-  title: "Samaki ",
-  description: "Affordable samaki",
-};
+import { ReduxProvider } from './Provider';
+
+// export const metadata: Metadata = {
+//   title: "Samaki ",
+//   description: "Affordable samaki",
+// };
 
 export default function RootLayout({
   children,
@@ -29,7 +32,9 @@ export default function RootLayout({
       <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
       <MantineProvider>
+        <ReduxProvider>
         {children}
+        </ReduxProvider>
         <Toaster position="top-center" reverseOrder={false} />
        </MantineProvider>
       </ThemeProvider>

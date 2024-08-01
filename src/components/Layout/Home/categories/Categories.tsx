@@ -1,44 +1,89 @@
-import { categoriesData } from "@/public/data/data";
-import Image from "next/image";
+"use client";
 
-const Categories = () => {
-//   const allSubcategories = categoriesData.flatMap(
-//     (category) => category.subcategories
-//   );
-const fishTypesCategory = categoriesData.find(category => category.name === "Fish Types");
-  const fishTypesSubcategories = fishTypesCategory ? fishTypesCategory.subcategories : [];
+
+import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
+import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
+import { useState, useRef, useEffect, useMemo } from "react";
+
+import { HiOutlineChevronRight } from "react-icons/hi2";
+import { HiOutlineChevronLeft } from "react-icons/hi2";
+
+
+interface Category {
+  id: number;
+  name: string;
+  created:string;
+  modified:string;
+}
+const CategoryBar = () => {
+ 
+  const { isLoading, data, refetch } = useGetAllCategoriesQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
+  const categories = useMemo(() => data?.results, [data]);
+//  console.log("data", data)
+ const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -100, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 100, behavior: "smooth" });
+    }
+  };
+  const handleCategoryClick = (category:Category) => {
+    if (activeCategory !== category) {
+      setActiveCategory(category);
+    }
+  };
 
   return (
-    <section className="px-5 bg-white shadow-lg  p-5">
-      <h2 className="text-2xl font-bold mb-4">Fish Types</h2>
-      <div className="grid grid-cols-5 gap-4">
-        {fishTypesSubcategories.map((subcategory, index) => (
-         <div
-        key={index}
-            className=" rounded-lg p-2  flex flex-col items-center gap-6 hover:text-[#DD3131] cursor-pointer
-                            transition ease-in-out
-                            delay-150 
-                            hover:-translate-y-1 
-                            hover:scale-110
-                             duration-300
-                             hover:shadow-md"
-           >
-          
-              <div className="w-full h-[170px] object-contain rounded-none overflow-hidden">
-                <Image
-                  src={subcategory.image}
-                  height={170}
-                  width={200}
-                  alt={subcategory.name}
-                  className=" w-full h-[170px] object-cover"
-                />
-              </div>
-              <span className="text-sm font-light">{subcategory.name}</span>
-            {/* </div> */}
-          </div>
+    <div className="relative w-full bg-white min-h-[50px] py-3">
+      <button
+        onClick={scrollLeft}
+        className="absolute lg:left-0 left-0 top-1/2 transform -translate-y-1/2 lg:ml-3 lg:p-0  lg:rounded-none px-0 py-1 rounded-md bg-red-500  "
+      >
+        <HiOutlineChevronLeft size={25} color="white" />
+      </button>
+      <div
+        ref={scrollRef}
+        className="flex min-h-[50px] items-center gap-2 overflow-x-scroll hide-scroll-bar px-8 sm:px-12"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <style jsx>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        {categories?.map((category:Category) => (
+          <button
+            key={category.id}
+            className={`whitespace-nowrap px-2 py-2 text-xs bg-slate-100 rounded-md ${
+              activeCategory === category ? "text-red-500" : ""
+            }`}
+            onClick={() =>handleCategoryClick(category)}
+          >
+            {category.name}
+          </button>
         ))}
       </div>
-    </section>
+      <button
+        onClick={scrollRight}
+        className="absolute lg:right-0 right-0 top-1/2 transform -translate-y-1/2 lg:mr-3  lg:rounded-none px-0 py-1 rounded-md bg-red-500  "
+      >
+        <HiOutlineChevronRight size={25} color="white" />
+      </button>
+    </div>
   );
 };
-export default Categories;
+
+export default CategoryBar;

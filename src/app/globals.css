@@ -47,7 +47,26 @@ body {
   height: 100%;
   object-fit: contain;
 }
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
 
+/* Show navigation buttons on larger devices */
+@media (min-width: 1024px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 24px; 
+    height: 24px; 
+    color: white; 
+  
+  }
+  
+
+}
 
 @layer utilities {
   .text-balance {

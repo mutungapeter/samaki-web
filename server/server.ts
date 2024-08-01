@@ -1,0 +1,1 @@
+export const server = "http://34.173.224.151:8001/apis";

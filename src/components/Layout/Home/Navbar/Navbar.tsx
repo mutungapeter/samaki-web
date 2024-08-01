@@ -49,8 +49,8 @@ const NavBar = ({ activeHeading }: Props) => {
   return (
     <>
    
-      <div className="w-full fixed top-0 left-0 z-30 transition hidden lg:flex items-center justify-between bg-white h-[70px]">
-        <div className="w-11/12 mx-auto flex items-center px-20 relative  justify-between">
+      <div className="w-full fixed top-0 left-0 z-30 transition hidden sm:flex md:flex  sm:px-5 lg:flex items-center justify-between bg-white h-[70px]">
+        <div className="w-11/12 md:w-full sm:w-full mx-auto flex items-center sm:px-0 lg:px-20 relative  justify-between">
           <div className="flex gap-3 items-center">
             <Link href="/">
               <span className="text-[25px] font-bold text-black uppercase">
@@ -87,7 +87,7 @@ const NavBar = ({ activeHeading }: Props) => {
                       </button>
                     </div>
                       </Link>
-                    <Link href="/login">
+                    <Link href="/account/profile">
                       <div className="flex items-center px-4 py-2 text-gray-800 hover:bg-gray-200">
                         <div className="flex gap-2">
                           <AiOutlineUser size={26} className="mr-2" />
@@ -197,13 +197,20 @@ const NavBar = ({ activeHeading }: Props) => {
                 </div>
               )}
             </div>
-            <div className="relative">
-              <Link href="/cart">
-                <span className="flex items-center space-x-2 hover:text-[#DD3131] ">
-                  <MdOutlineShoppingCart size={30} />
-                  <span>Cart</span>
+            <div className='flex items-center space-x-2 hover:text-[#DD3131]'>
+              <div
+                className="relative cursor-pointer  hover:text-[#DD3131]"
+              >
+                <MdOutlineShoppingCart
+                  size={30}
+                />
+                <span
+                 className="absolute right-0 top-0 rounded-full bg-[#DD3131] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center"
+                 >
+                  0
                 </span>
-              </Link>
+              </div>
+              <span>Cart</span>
             </div>
           </div>
         </div>
