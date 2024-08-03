@@ -1,0 +1,148 @@
+"use client";
+import Link from "next/link";
+import { CiFilter } from "react-icons/ci";
+import { HiChevronLeft } from "react-icons/hi2";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { MobileSearch } from "../Layout/Home/search/SearchInput";
+import { useMemo, useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
+import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
+import { useRouter, useSearchParams } from "next/navigation";
+interface Category {
+  id: number;
+  name: string;
+  created: string;
+  modified: string;
+}
+const ProductsMobile = () => {
+  const [open, setOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const { data: categoriesData } = useGetAllCategoriesQuery({},{ refetchOnMountOrArgChange: true });
+  const router = useRouter();
+  const categories = useMemo(() => categoriesData?.results || [],[categoriesData]);
+  const searchParams = useSearchParams();
+  const categoryNames = useMemo(() => { return searchParams.getAll("categories");}, [searchParams]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+
+  // const isCategoryChecked = (categoryName: string) => {
+  //   return categoryNames.includes(categoryName);
+  // };
+  const isCategoryChecked = (categoryName: string) => {
+    return selectedCategories.includes(categoryName);
+  };
+  // const handleCategoryChange = (categoryName: string) => {
+  //   const currentParams = new URLSearchParams(searchParams.toString());
+  //   if (currentParams.getAll("categories").includes(categoryName)) {
+  //     currentParams.delete("categories", categoryName);
+  //   } else {
+  //     currentParams.append("categories", categoryName);
+  //   }
+  //   router.push(`/products/?${currentParams.toString()}`);
+  // };
+  const handleCategoryChange = (categoryName: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryName)
+        ? prev.filter((name) => name !== categoryName)
+        : [...prev, categoryName]
+    );
+  };
+
+  const handleApply = () => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+    currentParams.delete("categories");
+    selectedCategories.forEach((categoryName) => {
+      currentParams.append("categories", categoryName);
+    });
+    router.push(`/products/?${currentParams.toString()}`);
+    closeDrawer();
+  };
+  const handleReset = () => {
+    setSelectedCategories([]);
+    router.push(`/products/`);
+  };
+  const showDrawer = () => {
+    setOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeDrawer = () => {
+    setOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
+  return (
+    <>
+      <div className="w-full lg:hidden sm:hidden">
+        <div className="fixed top-0 left-0 z-30 flex justify-between gap-3 items-center px-3 bg-white h-[45px] w-full">
+          <Link href="/" className="flex items-center">
+            <HiChevronLeft color="gray" size={20} />
+          </Link>
+          <div className="w-full bg-white">
+            <MobileSearch />
+          </div>
+          <MdOutlineShoppingCart color="gray" size={30} />
+        </div>
+        <div className="fixed top-[45px] left-0 z-30 flex justify-between gap-3 items-center px-3 bg-white h-[30px] w-full">
+          <h2 className="text-sm text-red-500">Popular</h2>
+          <div className="flex items-center space-x-1">
+            <h2 className="text-sm font-semibold">Filter</h2>
+            <CiFilter size={19} onClick={showDrawer} />
+          </div>
+        </div>
+      </div>
+
+      {/* Background Overlay */}
+      {open && (
+        <div
+          className="fixed top-0 left-0 z-30 w-full h-screen bg-black opacity-50"
+          onClick={closeDrawer}
+        ></div>
+      )}
+
+      <div
+        className={`fixed top-0 right-0 z-40 h-screen p-4 transition-transform transform ${
+          open ? "translate-x-0 " : "translate-x-full"
+        } bg-white w-64 `}
+      >
+        <div className="flex items-center justify-end">
+          <IoCloseOutline onClick={closeDrawer} />
+        </div>
+        <div className="h-screen overflow-y-auto py-5">
+          <h1 className="text-sm font-custom text-black mb-2">Categories</h1>
+          <div className="grid grid-cols-2 gap-2">
+            {categories.map((category: Category) => (
+              <div key={category.id} className="space-y-1">
+                <input
+                  type="checkbox"
+                  id={`category-${category.name}`}
+                  name="category"
+                  value={category.name}
+                  onChange={() => handleCategoryChange(category.name)}
+                  checked={isCategoryChecked(category.name)}
+                  className="mr-2"
+                />
+                <label
+                  htmlFor={`category-${category.name}`}
+                  className="text-xs font-light"
+                >
+                  {category.name}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="fixed transition w-full z-50 bottom-10 flex justify-between items-center px-4">
+          <h2 className="bg-white border border-red-500 px-4 py-2 rounded-md text-center">
+            <span className="text-red-500 text-xs" onClick={handleReset}>Reset</span>
+          </h2>
+          <h2 className="bg-red-500 px-4 py-2 rounded-md text-center">
+            <span className="text-white text-xs" onClick={handleApply}>Apply</span>
+          </h2>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ProductsMobile;

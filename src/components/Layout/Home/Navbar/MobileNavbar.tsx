@@ -36,7 +36,7 @@ const menuItems: MenuItemProps[] = [
     text: "cart",
   },
   {
-    path: "/account/profile",
+    path: "/account",
     Icon: FaUser ,
     text: "Account",
   },

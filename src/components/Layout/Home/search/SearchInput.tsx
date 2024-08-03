@@ -106,19 +106,19 @@ export const MobileSearch = () => {
   // useOutsideClick(searchRef, () => setSearchData([]));
   return (
     <div
-      className="w-full bg-white lg:mt-0   px-1 relative "
+      className="w-full bg-white    px-1 relative  flex items-center"
       // ref={searchRef}
     >
       <AiOutlineSearch
         size={20}
-        className="absolute left-4  top-2.5 cursor-pointer text-gray-500"
+        className="absolute left-4  cursor-pointer text-gray-500"
       />
       <input
         type="text"
         placeholder="Search for any dish "
         // value={searchTerm}
         // onChange={handleSearchChange}
-        className="h-[35px] w-full pl-10 px-2 border-gray-300 focus:outline-none focus:border-gray-300 border-[2px] rounded-md placeholder-gray-300 placeholder-text-xs"
+        className="h-[30px] bg-slate-100 w-full pl-10 px-2 border-slate-100 focus:outline-none focus:bg-white focus:shadow-sm border-[1px] rounded-md placeholder-gray-300 placeholder-text-xs"
       />
 
       {/* {searchData && searchData.length > 0 && (

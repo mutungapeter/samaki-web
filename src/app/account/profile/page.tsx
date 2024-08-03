@@ -12,7 +12,7 @@ const ProfileInfo = () => {
         </h2>
       </div>
 
-      <div className="w-full min-h-screen px-1 flex flex-col bg-[#F8F8F8]">
+      <div className="w-full min-h-screen px-1 flex flex-col bg-[#F8F8F8] lg:hidden sm:hidden">
         <div className="w-full fixed top-0 left-0 z-30 grid grid-cols-3 items-center px-3 lg:hidden sm:hidden bg-white h-[50px]">
           <Link
             href="/account"

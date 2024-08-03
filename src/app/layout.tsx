@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from '@mui/material/styles';
 import { ReduxProvider } from './Provider';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 // export const metadata: Metadata = {
 //   title: "Samaki ",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
       <MantineProvider>
+   
         <ReduxProvider>
         {children}
         </ReduxProvider>

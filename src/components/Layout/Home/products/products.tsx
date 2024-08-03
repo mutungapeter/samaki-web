@@ -25,15 +25,15 @@ const Products = () => {
   
 //   console.log("products", products);
 
-  // Handle loading state
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // Handle error state (optional)
-  // if (!products) {
-  //   return <div>Failed to load products. Please try again later.</div>;
-  // }
+
+  if (!products) {
+    return <div>Failed to load products. Please try again later.</div>;
+  }
   return (
     <section className="bg-white p-2">
       <h2 className="text-md font-bold mb-4 border-b border-gray-300 p-3">Deals you may like</h2>

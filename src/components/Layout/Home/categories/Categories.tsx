@@ -1,13 +1,12 @@
 "use client";
 
-
 import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
 import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
 import { useState, useRef, useEffect, useMemo } from "react";
 
 import { HiOutlineChevronRight } from "react-icons/hi2";
 import { HiOutlineChevronLeft } from "react-icons/hi2";
-
+import {useRouter} from "next/navigation";
 
 interface Category {
   id: number;
@@ -25,7 +24,7 @@ const CategoryBar = () => {
 //  console.log("data", data)
  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  
+  const router= useRouter()
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -100, behavior: "smooth" });
@@ -40,6 +39,7 @@ const CategoryBar = () => {
   const handleCategoryClick = (category:Category) => {
     if (activeCategory !== category) {
       setActiveCategory(category);
+      router.push(`/products?category__name=${category.name}`);
     }
   };
 

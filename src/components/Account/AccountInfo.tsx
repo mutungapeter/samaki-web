@@ -10,7 +10,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import Link from "next/link";
 const Account = () => {
   return (
-    <div className="w-full min-h-screen px-1 flex flex-col  bg-[#F8F8F8] gap-5">
+    <div className="w-full min-h-screen px-1 flex flex-col  bg-[#F8F8F8] gap-5 lg:hidden sm:hidden">
       <div className="px-4 min-h-[100px] flex flex-col w-full p-3 gap-3  rounded-md bg-[#102C57]">
         <div className="flex justify-end">
           <IoSettingsOutline size={24} color="white" />
