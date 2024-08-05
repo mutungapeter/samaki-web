@@ -31,6 +31,7 @@ const OrdersPage = () => {
   const handleCancelOrder = (orderNumber: string) => {
     console.log(`Order ${orderNumber} canceled`);
   };
+
   return (
     <>
       <div className="w-full fixed top-0 left-0 z-30 grid grid-cols-3 items-center px-3 lg:hidden sm:hidden bg-white h-[50px]">
@@ -41,22 +42,19 @@ const OrdersPage = () => {
           <h2 className="font-semibold">My orders</h2>
         </div>
       </div>
-      <div className="sm:mt-[80px] lg:mt-0  rounded-sm shadow-none sm:shadow-sm lg:shadow-md w-full flex flex-col bg-[#F8F8F8] sm:bg-white lg:bg-white p-3">
-        <div className=" items-center justify-between hidden lg:flex sm:flex border-b border-gray-300 p-3">
-          <h2 className="text-lg font-bold  ">Orders</h2>
+      <div className="sm:mt-[80px] lg:mt-0 rounded-sm shadow-none sm:shadow-sm lg:shadow-md w-full flex flex-col bg-[#F8F8F8] sm:bg-white lg:bg-white p-3">
+        <div className="items-center justify-between hidden lg:flex sm:flex border-b border-gray-300 p-3">
+          <h2 className="text-lg font-bold">Orders</h2>
           <div className="flex items-center space-x-5">
             <h2>Filter by</h2>
             <h2>Filter by</h2>
           </div>
         </div>
-        <div className="flex flex-col gap-3  mt-3">
+        <div className="flex flex-col mt-3">
           {orders.map((order: Order) => (
-            <div
-              key={order.orderNumber}
-              className="flex flex-col  border rounded-md p-2 bg-white "
-            >
-              {/* large devices */}
-              <div className=" flex-col  hidden sm:flex lg:flex">
+            <div key={order.orderNumber}>
+              {/* Div for large devices */}
+              <div className="hidden lg:flex flex-col p-3 border rounded-md bg-white mt-3">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 sm:grid-cols-3">
                   <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-2">
@@ -66,7 +64,7 @@ const OrdersPage = () => {
                       <span className="text-sm text-gray-500">
                         Number of Items: {order.items.length}
                       </span>
-                      <div className="flex  flex-col items-baseline">
+                      <div className="flex flex-col items-baseline">
                         <span
                           className={`text-xs p-1 rounded-md text-center ${getStatusStyles(
                             order.status
@@ -76,7 +74,7 @@ const OrdersPage = () => {
                         </span>
                       </div>
                     </div>
-                    <span className="justify-center text-sm text-gray-500 ">
+                    <span className="justify-center text-sm text-gray-500">
                       {order.total}
                     </span>
                   </div>
@@ -94,43 +92,41 @@ const OrdersPage = () => {
                         See Details
                       </button>
                     </div>
-                    <button
-                      className={` font-bold text-[10px] uppercase p-2 rounded-md text-center ${
-                        order.status.toLowerCase() === "delivered"
-                          ? "bg-gray-300 border-gray-300 text-white cursor-not-allowed"
-                          : "border text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
-                      }`}
-                      onClick={() => {
-                        if (order.status.toLowerCase() !== "delivered") {
-                          handleCancelOrder(order.orderNumber);
-                        }
-                      }}
-                      disabled={order.status.toLowerCase() === "delivered"}
-                    >
-                      Cancel
-                    </button>
+                    {["delivered", "cancelled"].includes(
+                      order.status.toLowerCase()
+                    ) ? (
+                      <div className="flex flex-col items-baseline">
+                        <span className="text-xs uppercase p-1 rounded-md bg-blue-500 cursor-pointer text-white px-2 py-1 text-center">
+                          Order Again
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-baseline">
+                        <span
+                          className="text-red-500 border cursor-pointer border-red-500 hover:bg-red-500 hover:text-white font-bold text-xs uppercase p-2 rounded-md text-center"
+                          onClick={() => handleCancelOrder(order.orderNumber)}
+                        >
+                          Cancel
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-              {/* mobile devices */}
-              <div className="flex lg:hidden sm:hidden flex-col gap-1">
+              {/* Div for mobile devices */}
+              <div className="flex lg:hidden flex-col p-3 border rounded-md bg-white mt-3">
                 <div className="flex justify-between">
                   <div>
                     <span className="text-sm text-black font-bold">
                       #{order.orderNumber}
                     </span>
+                    <span className="text-sm text-gray-500 block">
+                      {order.dateOfOrder}
+                    </span>
                   </div>
-                  <span className="text-sm text-gray-500 block">
-                    {order.dateOfOrder}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">
-                    Number of Items: {order.items.length}
-                  </span>
                   <span className="text-sm text-gray-500">{order.total}</span>
                 </div>
-                <div className="flex flex-col items-baseline">
+                <div className="flex justify-between items-center mt-2">
                   <span
                     className={`text-xs p-1 rounded-md text-center ${getStatusStyles(
                       order.status
@@ -138,30 +134,26 @@ const OrdersPage = () => {
                   >
                     {order.status}
                   </span>
-                </div>
-                <div className="flex justify-end items-center mt-2 space-x-3">
-                  <button
-                    className="text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white px-2 py-1 rounded-md text-[10px]  uppercase"
-                    onClick={() => handleViewDetails(order.orderNumber)}
-                  >
-                    See Details
-                  </button>
-
-                  <button
-                    className={` font-bold text-[10px] uppercase px-2 py-1 rounded-md text-center ${
-                      order.status.toLowerCase() === "delivered"
-                        ? "bg-gray-300 border-gray-300 text-white cursor-not-allowed"
-                        : "border text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
-                    }`}
-                    onClick={() => {
-                      if (order.status.toLowerCase() !== "delivered") {
-                        handleCancelOrder(order.orderNumber);
-                      }
-                    }}
-                    disabled={order.status.toLowerCase() === "delivered"}
-                  >
-                    Cancel
-                  </button>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      className="text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white p-2 rounded-md text-xs uppercase"
+                      onClick={() => handleViewDetails(order.orderNumber)}
+                    >
+                      See Details
+                    </button>
+                    {["delivered", "cancelled"].includes(order.status.toLowerCase()) ? (
+                      <span className="text-xs uppercase p-1 rounded-md bg-blue-500 cursor-pointer text-white px-2 py-1 text-center">
+                        Order Again
+                      </span>
+                    ) : (
+                      <span
+                        className="text-red-500 border cursor-pointer border-red-500 hover:bg-red-500 hover:text-white font-bold text-xs uppercase p-2 rounded-md text-center"
+                        onClick={() => handleCancelOrder(order.orderNumber)}
+                      >
+                        Cancel
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -171,6 +163,7 @@ const OrdersPage = () => {
     </>
   );
 };
+
 const getStatusStyles = (status: string) => {
   if (status.toLowerCase() === "pending") {
     return "bg-gray-500 text-white";
@@ -192,4 +185,5 @@ const getStatusStyles = (status: string) => {
     return "bg-gray-100 text-gray-500";
   }
 };
+
 export default OrdersPage;

@@ -2,11 +2,11 @@
 
 import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
 import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, Suspense } from "react";
 
 import { HiOutlineChevronRight } from "react-icons/hi2";
 import { HiOutlineChevronLeft } from "react-icons/hi2";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 interface Category {
   id: number;
@@ -15,7 +15,8 @@ interface Category {
   modified:string;
 }
 const CategoryBar = () => {
- 
+ ;
+  const searchParams = useSearchParams();
   const { isLoading, data, refetch } = useGetAllCategoriesQuery(
     {},
     { refetchOnMountOrArgChange: true }
@@ -38,12 +39,15 @@ const CategoryBar = () => {
   };
   const handleCategoryClick = (category:Category) => {
     if (activeCategory !== category) {
+      const currentParams = new URLSearchParams(searchParams.toString());
+      currentParams.set("categories", category.name);
+      router.push(`/products?${currentParams.toString()}`);
       setActiveCategory(category);
-      router.push(`/products?category__name=${category.name}`);
     }
   };
 
   return (
+    
     <div className="relative w-full bg-white min-h-[50px] py-3">
       <button
         onClick={scrollLeft}
@@ -83,6 +87,7 @@ const CategoryBar = () => {
         <HiOutlineChevronRight size={25} color="white" />
       </button>
     </div>
+   
   );
 };
 

@@ -41,9 +41,9 @@ const Products = () => {
         {products?.map((product: Product) => (
           <div
             key={product.id}
-            className="rounded-md h-[250px] bg-white flex flex-col gap-2 p-4 hover:text-red-500  hover:shadow-lg transition ease-in-out duration-300"
+            className="  bg-white flex flex-col gap-2 p-4 hover:text-red-500  hover:shadow-lg transition ease-in-out duration-300"
           >
-            <div className="w-full h-[175px] overflow-hidden rounded-md ">
+            <div className="w-full h-[175px] overflow-hidden  ">
               <Image
                 src={product.image || ""}
                 height={175}
@@ -52,14 +52,23 @@ const Products = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-[16px] text-black font-sans">{product.name}</span>
-            <span className="text-lg font-semibold font-sans text-red-600">
+            <div className="flex justify-between">
+              <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-red-500 ">
+                {product.name}
+              </span>
+              <div className="flex flex-col items-baseline">
+                <span className="p-1 rounded-md text-center text-[10px] lg:text-xs sm:text-xs bg-slate-100 text-blue-900">
+                  {product.brand}
+                </span>
+              </div>
+            </div>
+
+            <span className="text-xs">rating</span>
+
+            <span className="lg:text-lg sm:text-xl text-sm font-semibold font-sans text-black hover:text-red-500">
               KSh {product.selling_price}
             </span>
-            <div className="flex items-center ">
-             
-              {/* <span className="text-sm text-gray-500 ml-2">({product.rating} ratings)</span> */}
-            </div>
+           
           </div>
         ))}
       </div>

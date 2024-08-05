@@ -77,10 +77,6 @@ const Products = () => {
     });
   }, [productsData, categories, categoryNames]);
 
-  useEffect(() => {
-    console.log("Filtered Products:", filteredProducts);
-  }, [filteredProducts]);
-
   if (productsLoading || categoriesLoading) {
     return <div>Loading...</div>;
   }
@@ -128,24 +124,22 @@ const Products = () => {
                 className="mx-auto h-full w-full object-cover"
               />
             </div>
-          <div className="flex justify-between">
-          <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-red-500 ">
-             {product.name}
-            </span>
-            <div className="flex flex-col items-baseline">
-            <span className="p-1 rounded-md text-center text-[10px] lg:text-xs sm:text-xs bg-slate-100 text-blue-900">
-              {product.brand}
-            </span>
+            <div className="flex justify-between">
+              <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-red-500 ">
+                {product.name}
+              </span>
+              <div className="flex flex-col items-baseline">
+                <span className="p-1 rounded-md text-center text-[10px] lg:text-xs sm:text-xs bg-slate-100 text-blue-900">
+                  {product.brand}
+                </span>
               </div>
             </div>
-           
-              <span className="text-xs">rating</span>
-            
-         
+
+            <span className="text-xs">rating</span>
+
             <span className="lg:text-lg sm:text-xl text-sm font-semibold font-sans text-black hover:text-red-500">
-             KSh {product.selling_price} 
+              KSh {product.selling_price}
             </span>
-        
           </div>
         ))}
       </div>

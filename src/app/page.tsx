@@ -9,8 +9,10 @@ import {
 } from "../components/Layout/Home/search/SearchInput";
 import Products from "../components/Layout/Home/products/products";
 import AllCategories from "../components/Layout/Home/categories/Categories";
+import { Suspense } from "react";
 export default function Home() {
   return (
+    <>
     <div className="flex bg-[#F5F5F5] min-h-screen flex-col gap-3 ">
       <div className="flex flex-col w-full fixed top-0 z-20 py-2  bg-white">
         <div className="  w-full block lg:hidden  bg-white ">
@@ -23,13 +25,17 @@ export default function Home() {
       <div className="lg:py-0 py-0   px-1 rounded-md lg:px-0 sm:px-0 mt-[45px]  lg:mt-[53px]">
         <Carousel />
       </div>
+      <Suspense fallback={<div>Loading...</div>}>
       <div className="lg:mx-10">
         <AllCategories />
       </div>
-      <div className="min-h-screen mb-[60px] lg:mx-10 px-1    flex flex-col">
+      </Suspense>
+      <div className="min-h-screen mb-[60px] lg:mx-10 px-1 bg-white    flex flex-col">
         <Products />
       </div>
       <MobileNavbar />
     </div>
+    
+    </>
   );
 }
