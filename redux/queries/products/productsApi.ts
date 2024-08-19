@@ -3,10 +3,6 @@ import { apiSlice } from "@/redux/api/apiSlice";
 export const productsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      // query: ({ page = 1 }) => ({
-      //   url: 'products',
-      //   method: "GET",
-      // }),
       query: ({ page = 1, categoryNames = [] }: { page?: number; categoryNames?: string[] }) => {
         const queryParams = new URLSearchParams();
         queryParams.append("page", page.toString());
@@ -20,7 +16,14 @@ export const productsApi = apiSlice.injectEndpoints({
       }
       
     }),
+    getProductDetails: builder.query({
+      query: (id: any) => ({
+        url: `products/${id}`,
+        method: "GET",
+        // credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productsApi;
+export const { useGetAllProductsQuery, useGetProductDetailsQuery } = productsApi;

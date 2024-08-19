@@ -4,10 +4,11 @@ import { CiFilter } from "react-icons/ci";
 import { HiChevronLeft } from "react-icons/hi2";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MobileSearch } from "../Layout/Home/search/SearchInput";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import { useAppSelector } from "@/redux/hooks";
 import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter,usePathname, useSearchParams } from "next/navigation";
 interface Category {
   id: number;
   name: string;
@@ -23,23 +24,18 @@ const ProductsMobile = () => {
   const searchParams = useSearchParams();
   const categoryNames = useMemo(() => { return searchParams.getAll("categories");}, [searchParams]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { cart } = useAppSelector((state) => state.cart);
+  const [cartCount, setCartCount] = useState<number>(0);
+ 
+  useEffect(() => {
+    const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+    setCartCount(totalItems);
+  }, [cart]);
 
-
-  // const isCategoryChecked = (categoryName: string) => {
-  //   return categoryNames.includes(categoryName);
-  // };
   const isCategoryChecked = (categoryName: string) => {
     return selectedCategories.includes(categoryName);
   };
-  // const handleCategoryChange = (categoryName: string) => {
-  //   const currentParams = new URLSearchParams(searchParams.toString());
-  //   if (currentParams.getAll("categories").includes(categoryName)) {
-  //     currentParams.delete("categories", categoryName);
-  //   } else {
-  //     currentParams.append("categories", categoryName);
-  //   }
-  //   router.push(`/products/?${currentParams.toString()}`);
-  // };
+ 
   const handleCategoryChange = (categoryName: string) => {
     setSelectedCategories((prev) =>
       prev.includes(categoryName)
@@ -54,12 +50,12 @@ const ProductsMobile = () => {
     selectedCategories.forEach((categoryName) => {
       currentParams.append("categories", categoryName);
     });
-    router.push(`/products/?${currentParams.toString()}`);
+    router.push(`/products/list/?${currentParams.toString()}`);
     closeDrawer();
   };
   const handleReset = () => {
     setSelectedCategories([]);
-    router.push(`/products/`);
+    router.push(`/products/list`);
   };
   const showDrawer = () => {
     setOpen(true);
@@ -70,7 +66,11 @@ const ProductsMobile = () => {
     setOpen(false);
     document.body.style.overflow = "auto";
   };
+  // Get the current pathname
+  const pathname = usePathname();
 
+  // Determine if the pathname starts with /cart
+  const isCartPage = pathname.startsWith("/cart");
   return (
     <>
       <div className="w-full lg:hidden sm:hidden">
@@ -81,8 +81,22 @@ const ProductsMobile = () => {
           <div className="w-full bg-white">
             <MobileSearch />
           </div>
-          <MdOutlineShoppingCart color="gray" size={30} />
+          <div
+                className="relative cursor-pointer  hover:text-[#DD3131]"
+              >
+                <MdOutlineShoppingCart
+                  size={30}
+                  color="gray"
+                />
+                <span
+                 className="absolute right-0 top-0 rounded-full bg-[#DD3131] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center"
+                 >
+                  {cartCount}
+                </span>
+                </div>
+
         </div>
+        {!isCartPage && (
         <div className="fixed top-[45px] left-0 z-30 flex justify-between gap-3 items-center px-3 bg-white h-[30px] w-full">
           <h2 className="text-sm text-red-500">Popular</h2>
           <div className="flex items-center space-x-1">
@@ -90,6 +104,7 @@ const ProductsMobile = () => {
             <CiFilter size={19} onClick={showDrawer} />
           </div>
         </div>
+        )}
       </div>
 
       {/* Background Overlay */}
@@ -97,7 +112,9 @@ const ProductsMobile = () => {
         <div
           className="fixed top-0 left-0 z-30 w-full h-screen bg-black opacity-50"
           onClick={closeDrawer}
-        ></div>
+        >
+
+        </div>
       )}
 
       <div

@@ -15,6 +15,8 @@ import { IconUser } from "@tabler/icons-react";
 import { TiShoppingBag } from "react-icons/ti";
 import { LiaUserTieSolid } from "react-icons/lia";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { FaRegAddressCard } from "react-icons/fa";
+
 type MenuItemProps = {
   path: string;
   Icon: React.ElementType;
@@ -22,6 +24,7 @@ type MenuItemProps = {
 };
 const menuItems: MenuItemProps[] = [
   { path: "/account/profile", Icon: RxPerson, text: "My Account Info" },
+  { path: "/account/address", Icon: FaRegAddressCard, text: "My Addresses" },
   { path: "/account/orders", Icon: TiShoppingBag, text: "Orders" },
   { path: "/account/messages", Icon: MdOutlineMailOutline, text: "Inbox" },
   {
@@ -31,7 +34,7 @@ const menuItems: MenuItemProps[] = [
   },
   {
     path: "/account/change-password",
-    Icon: HiOutlineReceiptRefund,
+    Icon: RiLockPasswordLine,
     text: "Change Password",
   },
   { path: "/account/logout", Icon: AiOutlineLogin, text: "Log out" },

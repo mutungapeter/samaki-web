@@ -11,12 +11,14 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'custom': ['Open Sans', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        'custom': ['Open Sans', 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        
       },
     },
   },
   plugins: [
     // require("flowbite/plugin")
+    require('@tailwindcss/aspect-ratio'),
   ],
 };
 export default config;

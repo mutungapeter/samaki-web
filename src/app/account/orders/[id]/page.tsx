@@ -28,6 +28,7 @@ interface Order {
 
 const OrderDetail = ({ params: { id } }: DetailProps) => {
   const [order, setOrder] = useState<Order | null>(null);
+  
   useEffect(() => {
     const findOrderById = (id: string): Order | null => {
       const order = orders.find((order) => order.orderNumber === id);
@@ -40,7 +41,7 @@ const OrderDetail = ({ params: { id } }: DetailProps) => {
   // console.log('order', order)
   return (
     <div className=" rounded-sm  w-full flex flex-col bg-white px-4 sm:mt-[80px] lg:mt-0 ">
-      <div className="flex gap-2 items-center border-b border-gray-300 mb-4">
+      <div className="flex gap-2 items-center border-b border-gray-300 mb-4 p-3">
         <div className="cursor-pointer">
           <Link href="/account/orders">
             <FiArrowLeft size={30} color="gray" />
@@ -50,7 +51,7 @@ const OrderDetail = ({ params: { id } }: DetailProps) => {
       </div>
       <div className=" flex flex-col gap-2 w-full sm:w-80 lg:w-80 mb-4 border p-1">
         <p>
-          <strong>Order nº {order?.orderNumber} </strong>
+          <span className="lg:text-sm sm:text-sm text-xs">Order No: <span className="font-semibold sm:text-sm text-xs lg:text-sm">#{order?.orderNumber}</span> </span>
         </p>
         <div className="flex items-center justify-between border-b mb-1 ">
           <p className="text-xs lg:tex-sm sm:text-sm font-medium mb-1">
@@ -76,8 +77,8 @@ const OrderDetail = ({ params: { id } }: DetailProps) => {
 
       <div className="mb-4 border-t border-gray-300">
         <div className="flex items-center justify-between mt-5 mb-3">
-          <h3 className="text-md font-medium ">ITEMS IN YOUR ORDER</h3>
-          <button className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md text-[12px] lg:text-xs sm:text-xs shadow-md uppercase">
+          <h3 className="lg:text-md sm:text-medium text-sm font-medium ">ITEMS IN YOUR ORDER</h3>
+          <button className="lg:px-4 lg:py-2 text-[10px] sm:px-4 sm:py-2 p-2 bg-red-500 text-white font-semibold rounded-md lg:text-xs sm:text-xs shadow-md uppercase">
             Track order
           </button>
         </div>

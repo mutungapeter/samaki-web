@@ -3,152 +3,189 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 import Image from "next/image";
-// import { useOutsideClick } from "@/src/hooks/ClickHook";
+
 import { RxCross1 } from "react-icons/rx";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-// import { Doctor } from "@/src/definitions/doctorTypes";
-// import {doctorsData } from "@/public/Data/doctorData";
+import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
+import { useOutsideClick } from "@/src/hooks/ClickOutsideHook";
+interface Product {
+  id: number;
+  created: string;
+  modified: string;
+  name: string;
+  buying_price: string;
+  selling_price: string;
+  quantity: number;
+  unit_of_measure: string;
+  brand: string;
+  image: string;
+  category: number | null;
+}
 export const Search = () => {
+  const {
+    isLoading: productsLoading,
+    data: productsData,
+    refetch,
+  } = useGetAllProductsQuery({}, { refetchOnMountOrArgChange: true });
   const [searchTerm, setSearchTerm] = useState("");
-//   const [searchData, setSearchData] = useState<Doctor[] | null>(null);
-//   const [allDoctors, setAllDoctors] = useState<any>([]);
+  const [searchData, setSearchData] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<any>([]);
 
-//   useEffect(() => {
-//     setAllDoctors(doctorsData);
-//   }, []);
+  useEffect(() => {
+    if (productsData) {
+      const products = productsData?.results;
+      setProducts(products);
+    }
+  }, [productsData]);
 
-//   const handleSearchChange = (e: any) => {
-//     const term = e.target.value;
-//     setSearchTerm(term);
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSearchData([]);
+    } else {
+      const filteredProducts = products.filter((product: Product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchData(filteredProducts);
+    }
+  }, [searchTerm, products]);
 
-//     const filteredDoctors = allDoctors?.filter((doctor: any) =>
-//       doctor?.name.toLowerCase().includes(term.toLowerCase())
-//     );
-//     setSearchData(filteredDoctors);
-//   };
-  // console.log("allDoctors", allDoctors);
-  // console.log("searchData", searchData);
-//   const searchRef = useRef<HTMLDivElement>(null);
-//   useOutsideClick(searchRef, () => setSearchData([]));
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const searchRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(searchRef, () => setSearchData([]));
 
   return (
-    <div className="w-[50%] relative" 
-    // ref={searchRef}
-    >
-       <AiOutlineSearch
+    <div className="w-[50%] relative" ref={searchRef}>
+      <AiOutlineSearch
         size={20}
         className="absolute left-4  top-2.5 cursor-pointer text-gray-500"
       />
       <input
         type="text"
         placeholder="Search "
-        // value={searchTerm}
-        // onChange={handleSearchChange}
-        className="h-[40px] w-full px-2 pl-10 border-gray-400 focus:outline-none focus:border-gray-400 border-[2px] rounded-md"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="h-[40px] w-full px-2 pl-10 border border-green-700 focus:outline-none focus:border-green-900  rounded-md"
       />
-     
 
-     {/* {searchData && searchData.length > 0 && (
-        <div className="absolute min-h-[30vh]  max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-50 p-4 top-[40px] w-full ">
-          {searchData.map((doctor, index) => (
-            <Link href={`/doctors/` + doctor.id} key={index}>
-              <div className="w-full flex gap-20 items-center p-2 rounded-md hover:bg-slate-200  cursor-pointer">
-                <div className="w-[70px] h-[70px]  rounded-full overflow-hidden">
-                  <Image
-                    src={doctor.image}
-                    height={70}
-                    width={70}
-                    alt=""
-                    className=" w-[70px] h-[70px] object-cover"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h1>{doctor.name}</h1>
-                  <div className="items-start flex flex-col ">
-                    <h2 className="text-[15px] bg-blue-100 p-0 px-1 rounded-full mt-1 text-center text-[#1976D2]">
-                      {doctor.expertise}
-                    </h2>
+      {searchTerm.trim() !== "" && (
+        <div className="absolute min-h-[30vh] max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-50 p-4 top-[40px] w-full">
+          {searchData && searchData.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No results found for {searchTerm}
+            </p>
+          ) : (
+            searchData?.map((product: Product) => (
+              <Link href={`/products/${product.id}`} key={product.id}>
+                <div className="w-full flex space-x-6 items-center p-2 rounded-md hover:bg-slate-200 cursor-pointer">
+                  <div className="w-[30px] h-[30px] rounded-md overflow-hidden">
+                    <Image
+                      src={product.image}
+                      height={30}
+                      width={30}
+                      alt={product.name}
+                      className="w-[30px] h-[30px] object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <h1>{product.name}</h1>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))} 
+              </Link>
+            ))
+          )}
         </div>
-      )} */}
+      )}
     </div>
   );
 };
 
 export const MobileSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  // const [searchData, setSearchData] = useState<Doctor[] | null>(null);
-  // const [allDoctors, setAllDoctors] = useState<any>([]);
+  const {
+    isLoading: productsLoading,
+    data: productsData,
+    refetch,
+  } = useGetAllProductsQuery({}, { refetchOnMountOrArgChange: true });
 
-  // useEffect(() => {
-  //   setAllDoctors(doctorsData);
-  // }, []);
-  // const handleSearchChange = (e: any) => {
-  //   const term = e.target.value;
-  //   setSearchTerm(term);
+  const [searchData, setSearchData] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<any>([]);
 
-  //   const filteredDoctors = allDoctors?.filter((doctor: any) =>
-  //     doctor?.name.toLowerCase().includes(term.toLowerCase())
-  //   );
-  //   setSearchData(filteredDoctors);
-  // };
-  // console.log("allDoctors", allDoctors);
-  // console.log("searchData", searchData);
-  // const searchRef = useRef<HTMLDivElement>(null);
-  // useOutsideClick(searchRef, () => setSearchData([]));
+  useEffect(() => {
+    if (productsData) {
+      const products = productsData?.results;
+      setProducts(products);
+    }
+  }, [productsData]);
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setSearchData([]);
+    } else {
+      const filteredProducts = products.filter((product: Product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchData(filteredProducts);
+    }
+  }, [searchTerm, products]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const searchRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(searchRef, () => setSearchData([]));
   return (
     <div
-      className="w-full bg-white    px-1 relative  flex items-center"
-      // ref={searchRef}
+      className="w-full bg-white  px-1  relative  flex items-center"
+      ref={searchRef}
     >
       <AiOutlineSearch
         size={20}
-        className="absolute left-4  cursor-pointer text-gray-500"
+        className="absolute left-5  cursor-pointer text-green-900"
       />
       <input
         type="text"
         placeholder="Search for any dish "
-        // value={searchTerm}
-        // onChange={handleSearchChange}
-        className="h-[30px] bg-slate-100 w-full pl-10 px-2 border-slate-100 focus:outline-none focus:bg-white focus:shadow-sm border-[1px] rounded-md placeholder-gray-300 placeholder-text-xs"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="h-[35px] bg-white w-full pl-10 px-2 border-green-900 focus:outline-none focus:bg-white  border-[1px] rounded-md placeholder-gray-300 placeholder-text-[12px]"
       />
 
-      {/* {searchData && searchData.length > 0 && (
-        <div className="absolute min-h-[30vh] px-3 max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-30 p-4 top-[40px] w-full ">
-          {searchData.map((doctor, index) => (
-            <Link href={`/doctors/` + doctor.id}
-            key={index}>
-              <div className="w-full flex gap-20 items-center p-2 rounded-md hover:bg-slate-200  cursor-pointer">
-                <div className="w-[70px] h-[70px]  rounded-full overflow-hidden">
-                  <Image
-                    src={doctor.image}
-                    height={70}
-                    width={70}
-                    alt=""
-                    className=" w-[70px] h-[70px] object-cover"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <h1>{doctor.name}</h1>
-                  <div className="items-start flex flex-col ">
-                    <h2 className="text-[15px] bg-blue-100 p-0 px-1 rounded-full mt-1 text-center text-[#1976D2]">
-                      {doctor.expertise}
-                    </h2>
+      {searchTerm.trim() !== "" && (
+        <div className="absolute min-h-[30vh] max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-50 p-4 top-[40px] w-full">
+          {searchData && searchData.length === 0 ? (
+            <p className="text-center text-gray-500">
+              No results found for {searchTerm}
+            </p>
+          ) : (
+            searchData?.map((product: Product) => (
+              <Link href={`/products/${product.id}`} key={product.id}>
+                <div className="w-full flex space-x-6 items-center p-2 rounded-md hover:bg-slate-200 cursor-pointer">
+                  <div className="w-[30px] h-[30px] rounded-md overflow-hidden">
+                    <Image
+                      src={product.image}
+                      height={30}
+                      width={30}
+                      alt={product.name}
+                      className="w-[30px] h-[30px] object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <h1>{product.name}</h1>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          )}
         </div>
-      )} */}
+      )}
     </div>
   );
 };

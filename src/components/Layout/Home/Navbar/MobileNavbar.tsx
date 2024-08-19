@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
 import {
@@ -20,6 +20,7 @@ import { IoIosList } from "react-icons/io";
 import { AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaUser } from "react-icons/fa6";
+import { useAppSelector } from "@/redux/hooks";
 
 type MenuItemProps = {
   path: string;
@@ -31,7 +32,7 @@ const menuItems: MenuItemProps[] = [
   { path: "/account/orders", Icon: IoIosList, text: "categories" },
   { path: "/account/messages", Icon: AiOutlineMessage, text: "Message" },
   {
-    path: "/account/cart",
+    path: "/cart",
     Icon: MdOutlineShoppingCart,
     text: "cart",
   },
@@ -44,20 +45,26 @@ const menuItems: MenuItemProps[] = [
 
 const Badge: React.FC<{ count: number }> = ({ count }) => (
     <span 
-    // className="absolute right-0 top-0 rounded-full bg-[#DD3131] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center"
-     className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 text-xs text-white bg-red-500 rounded-full"
+       className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 text-xs text-white bg-red-500 rounded-full"
     >
     {count}
   </span>
   );
   
 const MobileNavbarMenu = ({ path, Icon, text }: MenuItemProps) => {
+  const { cart } = useAppSelector((state) => state.cart);
   const router = useRouter();
   const pathname = usePathname();
   const isActive = pathname === path;
-  const isCart = path === "/account/cart";
-  const cartCount = 0;
-
+  // const isCart = path === "/account/cart";
+  const [cartCount, setCartCount] = useState<number>(0);
+  
+  useEffect(() => {
+    const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+    setCartCount(totalItems);
+  }, [cart]);
+  // const showBadge = path === "/cart" && pathname !== "/account/cart";
+  const showBadge = text.toLowerCase() === "cart";
   return (
     <Link href={path}>
       <div
@@ -65,7 +72,7 @@ const MobileNavbarMenu = ({ path, Icon, text }: MenuItemProps) => {
       >
          <div className="relative">
           <Icon size={24} color={isActive ? "red" : ""} />
-          {isCart && <Badge count={cartCount} />}
+          {showBadge && <Badge count={cartCount} />}
         </div>
         <span
           className={`text-xs font-normal ${isActive ? "text-red-500" : ""}`}

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import React from "react";
+import React, { useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import FilledInput from "@mui/material/FilledInput";
@@ -18,11 +18,47 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { FieldValues, useForm } from "react-hook-form";
+import { z } from "zod";
+import { useLoginMutation } from "@/redux/queries/auth/authApi";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [login, { data, error, isSuccess }] = useLoginMutation();
 
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Login  successful";
+      toast.success(message);
+      redirect("/account/address");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        console.log("errorData", errorData)
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [isSuccess, error]);
+  const loginSchema = z.object({
+    username: z.string().nonempty(),
+    password: z.string().min(6, "Password must be atleast 6 characters"),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+  });
+  const onSubmit = async (data: FieldValues) => {
+    const { username, password } = data;
+    await login(data);
+  };
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -32,16 +68,6 @@ const LoginPage = () => {
     <div className="flex min-h-screen flex-1 flex-col justify-center bg-white px-2 lg:px-8">
       <div className="max-w-md w-full mx-auto bg-white p-8 ">
         <div className="flex flex-col items-center mb-5">
-          {/* <div className="rounded-full overflow-hidden">
-            <Image
-              src="/assets/image4.jpg"
-              height={150}
-              width={150}
-              alt="logo"
-              className="h-[150px] w-[150px] rounded-full"
-            /> */}
-
-          {/* </div> */}
           <div className="flex gap-3 items-center mt-4">
             <span className="text-[25px] font-bold text-black uppercase">
               Samaki
@@ -54,7 +80,7 @@ const LoginPage = () => {
         <h2 className="text-2xl font-light mb-4 text-center">
           Login with password.
         </h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Box
             sx={{
               width: 500,
@@ -65,12 +91,17 @@ const LoginPage = () => {
             }}
             gap={5}
           >
-            <TextField fullWidth label="Email" id="email" margin="dense" />
+            <TextField
+              fullWidth
+              label="Username"
+              id="username"
+              margin="dense"
+              {...register("username")}
+              name="username"
+            />
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password"
-              
-              >
+              <InputLabel htmlFor="outlined-adornment-password">
                 Password
               </InputLabel>
               <OutlinedInput
@@ -89,6 +120,8 @@ const LoginPage = () => {
                   </InputAdornment>
                 }
                 label="Password"
+                {...register("password")}
+                name="password"
               />
             </FormControl>
           </Box>
@@ -127,8 +160,9 @@ const LoginPage = () => {
                   backgroundColor: "#DD3131",
                 },
               }}
+              type="submit"
             >
-              LOGIN
+             {isSubmitting ? "submitting" : "Login"}
             </Button>
           </Box>
           <Box

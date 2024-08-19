@@ -14,9 +14,9 @@ import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay, Zoom } from "sw
 
 export default function Carousel() {
   return (
-    <div className="mt-[0px] bg-[#FFFFFF] h-[160px] rounded-md lg:rounded-none  lg:h-[400px]">
-      <div className="w-full   flex  justify-center  gap-4 ">
-        <div className="flex flex-col w-full bg-white">
+    <>
+      <div className="w-full mt-[55px] lg:mt-[60px] h-[160px] rounded-md   lg:h-[400px] flex  justify-center  gap-4 ">
+        <div className="flex flex-col lg:w-11/12 sm:w-11/12 w-full bg-white">
           <Swiper
              cssMode={true}
              navigation={{
@@ -51,10 +51,10 @@ export default function Carousel() {
                   objectFit="cover"
                   objectPosition="center"
                   quality={100}
-                  className="rounded-md lg:rounded-none"
+                  className="rounded-md"
                 />
               </div>
-              <div className="absolute bottom-4 right-4 text-white bg-[#DD3131] p-2 rounded cursor-pointer">
+              <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
                 Order Now
               </div>
             </SwiperSlide>
@@ -70,10 +70,10 @@ export default function Carousel() {
                   objectFit="cover"
                   objectPosition="center"
                   quality={100}
-                  className="rounded-md lg:rounded-none"
+                  className="rounded-md"
                 />
               </div>
-              <div className="absolute bottom-4 right-4 text-white bg-[#DD3131] p-2 rounded cursor-pointer">
+              <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
                 Order Now
               </div>
             </SwiperSlide>
@@ -82,6 +82,6 @@ export default function Carousel() {
           </Swiper>
         </div>
       </div>
-    </div>
+    </>
   );
 }

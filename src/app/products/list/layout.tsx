@@ -11,19 +11,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { GoChevronRight } from "react-icons/go";
 import FilterComponent from "@/src/components/products/Filter";
 import ProductsMobile from "@/src/components/products/MobileTopBar";
+import Footer from "@/src/components/Layout/Home/Footer/footer";
 const ProductsLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const showMobileNavbar = pathname === "/account" || pathname === "/";
 
   const router = useRouter();
 
-
   const handleBreadcrumbClick = (path: string) => {
     router.push(path);
   };
 
-
   const categoryName = pathname.split("/").pop();
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="min-h-screen flex bg-[#F8F8F8] flex-col sm:gap-3 gap-2 lg:gap-3">
@@ -50,8 +50,13 @@ const ProductsLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="w-[50px] lg:w-[400px] sm:w-[400px] sticky lg:top-[10px] top-[10px]   hidden sm:block lg:block">
             <FilterComponent />
           </div>
-          <div className="w-full sm:w-full  lg:mt-0 mt-[75px] sm:mt-0 ">{children}</div>
+          <div className="w-full sm:w-full  lg:mt-0 mt-[75px] sm:mt-0 ">
+            {children}
+          </div>
         </div>
+      </div>
+      <div className="hidden lg:block sm:block">
+        <Footer />
       </div>
     </Suspense>
   );

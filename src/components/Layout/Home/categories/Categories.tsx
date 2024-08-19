@@ -41,7 +41,7 @@ const CategoryBar = () => {
     if (activeCategory !== category) {
       const currentParams = new URLSearchParams(searchParams.toString());
       currentParams.set("categories", category.name);
-      router.push(`/products?${currentParams.toString()}`);
+      router.push(`/products/list/?${currentParams.toString()}`);
       setActiveCategory(category);
     }
   };
@@ -51,7 +51,7 @@ const CategoryBar = () => {
     <div className="relative w-full bg-white min-h-[50px] py-3">
       <button
         onClick={scrollLeft}
-        className="absolute lg:left-0 left-0 top-1/2 transform -translate-y-1/2 lg:ml-3 lg:p-0  lg:rounded-none px-0 py-1 rounded-md bg-red-500  "
+        className="absolute lg:left-0 left-0 top-1/2 transform -translate-y-1/2 lg:ml-3 lg:p-0  lg:rounded-none px-0 py-1 rounded-md bg-green-900  "
       >
         <HiOutlineChevronLeft size={25} color="white" />
       </button>
@@ -72,7 +72,7 @@ const CategoryBar = () => {
           <button
             key={category.id}
             className={`whitespace-nowrap px-2 py-2 text-xs bg-slate-100 rounded-md ${
-              activeCategory === category ? "text-red-500" : ""
+              activeCategory === category ? "text-green-600" : ""
             }`}
             onClick={() =>handleCategoryClick(category)}
           >
@@ -82,7 +82,7 @@ const CategoryBar = () => {
       </div>
       <button
         onClick={scrollRight}
-        className="absolute lg:right-0 right-0 top-1/2 transform -translate-y-1/2 lg:mr-3  lg:rounded-none px-0 py-1 rounded-md bg-red-500  "
+        className="absolute lg:right-0 right-0 top-1/2 transform -translate-y-1/2 lg:mr-3  lg:rounded-none px-0 py-1 rounded-md bg-green-900  "
       >
         <HiOutlineChevronRight size={25} color="white" />
       </button>

@@ -7,6 +7,7 @@ import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesA
 import clsx from "clsx";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BsCashStack } from "react-icons/bs";
+import Link from "next/link";
 interface Product {
   id: number;
   created: string;
@@ -77,13 +78,7 @@ const Products = () => {
     });
   }, [productsData, categories, categoryNames]);
 
-  if (productsLoading || categoriesLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!filteredProducts.length) {
-    return <div>No products found for this category.</div>;
-  }
+// console.log(productsData)
   const pageSize = 10;
   const totalPages = Math.ceil((productsData?.count || 0) / pageSize);
 
@@ -91,17 +86,25 @@ const Products = () => {
     if (page < 1 || page > totalPages) return;
     const currentParams = new URLSearchParams(searchParams.toString());
     currentParams.set("page", page.toString());
-    router.push(`/products/?${currentParams.toString()}`);
+    router.push(`/products/list/?${currentParams.toString()}`);
   };
 
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
+  if (productsLoading || categoriesLoading) {
+    return <div>Loading...</div>;
+  }
 
-  const isProductRoute =
-    pathname === "/products" && searchParams.toString() === "";
+  if (!filteredProducts.length) {
+    return <div>No products found for this category.</div>;
+  }
+  const isProductRoute = pathname === "/products" && searchParams.toString() === "";
 
+    const handleViewDetails = (id: number) => {
+      router.push(`/products/${id}`);
+    };
   return (
     <section className="bg-[#F5F5F5] p-2">
       <div
@@ -111,9 +114,13 @@ const Products = () => {
         })}
       >
         {filteredProducts.map((product: Product) => (
+       
+
+          
           <div
             key={product.id}
-            className="rounded-md  bg-white flex flex-col gap-2 p-3  hover:text-red-500 cursor-pointer hover:shadow-lg transition ease-in-out duration-300"
+            className="rounded-md  bg-white flex flex-col gap-2 p-3  hover:text-green-500 cursor-pointer hover:shadow-lg transition ease-in-out duration-300"
+            onClick={() => handleViewDetails(product.id)}
           >
             <div className="h-[175px] w-full">
               <Image
@@ -125,7 +132,7 @@ const Products = () => {
               />
             </div>
             <div className="flex justify-between">
-              <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-red-500 ">
+              <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-green-500 ">
                 {product.name}
               </span>
               <div className="flex flex-col items-baseline">
@@ -137,10 +144,11 @@ const Products = () => {
 
             <span className="text-xs">rating</span>
 
-            <span className="lg:text-lg sm:text-xl text-sm font-semibold font-sans text-black hover:text-red-500">
+            <span className="lg:text-lg sm:text-xl text-sm font-semibold font-sans text-black hover:text-green-500">
               KSh {product.selling_price}
             </span>
           </div>
+       
         ))}
       </div>
 
@@ -163,7 +171,7 @@ const Products = () => {
               onClick={() => handlePageChange(page)}
               className={`px-4 py-2 border rounded ${
                 page === currentPage
-                  ? "bg-red-500 text-white"
+                  ? "bg-green-900 text-white"
                   : "bg-white text-black border-gray-300 hover:bg-gray-100"
               }`}
             >

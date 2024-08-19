@@ -1,25 +1,24 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit"
 import { apiSlice } from "./api/apiSlice";
-
-
-
-export const store = configureStore({
+import cartReducer from './slices/Cart';
+import authSlice from "./queries/auth/authSlice";
+import addressReducer from "./slices/address"
+export const makeStore = () => {
+  return configureStore({
     reducer: {
       [apiSlice.reducerPath]: apiSlice.reducer,
-    //   auth: authSlice,
+      cart: cartReducer,
+      auth: authSlice,
+      address: addressReducer,
     },
-    devTools: false,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(apiSlice.middleware),
-  });
-  
-  // call the load user function on every page load
-//   const initializeApp = async () => {
-//     await store.dispatch(
-//       apiSlice.endpoints.loadUser.initiate({}, { forceRefetch: true })
-//     );
-//   };
+  })
+}
 
-//   initializeApp();
+export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<AppStore['getState']>
+export type AppDispatch = AppStore['dispatch']  
+
 

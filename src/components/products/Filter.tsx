@@ -35,7 +35,7 @@ const FilterComponent = () => {
     } else {
       currentParams.append("categories", categoryName);
     }
-    router.push(`/products/?${currentParams.toString()}`);
+    router.push(`/products/list/?${currentParams.toString()}`);
   };
 
   return (
