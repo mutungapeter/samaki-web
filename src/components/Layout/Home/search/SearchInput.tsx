@@ -12,6 +12,7 @@ import {
 } from "react-icons/ai";
 import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
 import { useOutsideClick } from "@/src/hooks/ClickOutsideHook";
+import { MdOutlineShoppingCart } from "react-icons/md";
 interface Product {
   id: number;
   created: string;
@@ -142,50 +143,64 @@ export const MobileSearch = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   useOutsideClick(searchRef, () => setSearchData([]));
   return (
-    <div
-      className="w-full bg-white  px-1  relative  flex items-center"
-      ref={searchRef}
-    >
-      <AiOutlineSearch
-        size={20}
-        className="absolute left-5  cursor-pointer text-green-900"
-      />
-      <input
-        type="text"
-        placeholder="Search for any dish "
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="h-[35px] bg-white w-full pl-10 px-2 border-green-900 focus:outline-none focus:bg-white  border-[1px] rounded-md placeholder-gray-300 placeholder-text-[12px]"
-      />
-
-      {searchTerm.trim() !== "" && (
-        <div className="absolute min-h-[30vh] max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-50 p-4 top-[40px] w-full">
-          {searchData && searchData.length === 0 ? (
-            <p className="text-center text-gray-500">
-              No results found for {searchTerm}
-            </p>
-          ) : (
-            searchData?.map((product: Product) => (
-              <Link href={`/products/${product.id}`} key={product.id}>
-                <div className="w-full flex space-x-6 items-center p-2 rounded-md hover:bg-slate-200 cursor-pointer">
-                  <div className="w-[30px] h-[30px] rounded-md overflow-hidden">
-                    <Image
-                      src={product.image}
-                      height={30}
-                      width={30}
-                      alt={product.name}
-                      className="w-[30px] h-[30px] object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <h1>{product.name}</h1>
-                  </div>
-                </div>
-              </Link>
-            ))
-          )}
+    <>
+      <div className="fixed top-0 left-0 right-0 h-[100px] bg-white shadow-lg z-20   flex flex-col gap-2 lg:hidden sm:hidden">
+        <div className="flex items-center justify-between px-4">
+          <Link href="/">
+            <span className="text-[25px] font-bold text-green-900 uppercase">
+              Eshop
+            </span>
+          </Link>
+          <MdOutlineShoppingCart size={30} color="text-green-900" />
         </div>
-      )}
-    </div>
+        <div className="flex justify-center items-center ">
+          <div
+            className="w-full  px-2  relative  flex items-center"
+            ref={searchRef}
+          >
+            <AiOutlineSearch
+              size={20}
+              className="absolute left-5  cursor-pointer text-green-900"
+            />
+            <input
+              type="text"
+              placeholder="Search for any dish "
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="h-[40px] bg-white w-full pl-10 px-2 border-green-900 focus:outline-none focus:bg-white  border-[1px] rounded-sm placeholder-gray-300 placeholder-text-[12px]"
+            />
+
+            {searchTerm.trim() !== "" && (
+              <div className="absolute min-h-[30vh] max-h-[30vh] overflow-y-scroll bg-slate-50 shadow-sm-2 z-50 p-4 top-[40px] w-full">
+                {searchData && searchData.length === 0 ? (
+                  <p className="text-center text-gray-500">
+                    No results found for {searchTerm}
+                  </p>
+                ) : (
+                  searchData?.map((product: Product) => (
+                    <Link href={`/products/${product.id}`} key={product.id}>
+                      <div className="w-full flex space-x-6 items-center p-2 rounded-md hover:bg-slate-200 cursor-pointer">
+                        <div className="w-[30px] h-[30px] rounded-md overflow-hidden">
+                          <Image
+                            src={product.image}
+                            height={30}
+                            width={30}
+                            alt={product.name}
+                            className="w-[30px] h-[30px] object-cover"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <h1>{product.name}</h1>
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };

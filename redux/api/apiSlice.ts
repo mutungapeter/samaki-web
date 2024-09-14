@@ -7,15 +7,7 @@ export const apiSlice = createApi({
     prepareHeaders: (headers) => {
       const accessToken = Cookies.get("accessToken");
       const refreshToken = Cookies.get("refreshToken");
-      // console.log("Access Token: ", accessToken); 
-      // console.log("Refresh Token: ", refreshToken); 
-
-      // if (accessToken) {
-      //   headers.set("access-token", accessToken);
-      // }
-      // if (refreshToken) {
-      //   headers.set("refresh-token", refreshToken);
-      // }
+     
       if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
       }

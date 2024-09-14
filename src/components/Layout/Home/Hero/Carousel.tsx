@@ -54,9 +54,9 @@ export default function Carousel() {
                   className="rounded-md"
                 />
               </div>
-              <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
+              {/* <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
                 Order Now
-              </div>
+              </div> */}
             </SwiperSlide>
             <SwiperSlide
               className="relative"
@@ -73,9 +73,9 @@ export default function Carousel() {
                   className="rounded-md"
                 />
               </div>
-              <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
+              {/* <div className="absolute bottom-4 right-4 text-white bg-green-900 p-2 rounded-md cursor-pointer">
                 Order Now
-              </div>
+              </div> */}
             </SwiperSlide>
             <div className="swiper-button-next hidden lg:flex lg:items-center lg:justify-center lg:w-6 lg:h-6  lg:text-white  " style={{ right: '10px' }}></div>
           <div className="swiper-button-prev hidden lg:flex lg:items-center lg:justify-center lg:w-6 lg:h-6  lg:text-white   " style={{ left: '10px' }}></div>

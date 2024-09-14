@@ -74,7 +74,7 @@ const NavBar = ({ activeHeading }: Props) => {
               <button
                 className="flex items-center space-x-2 hover:text-green-600"
                 onClick={() => setAccountOpen((prev) => !prev)}
-                ref={accountRef}
+                // ref={accountRef}
               >
                 <div className="p-2 rounded-full bg-green-100">
                 <HiOutlineUser size={26} />
