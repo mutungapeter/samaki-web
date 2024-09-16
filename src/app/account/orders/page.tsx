@@ -4,7 +4,7 @@ import orders from "@/public/data/orders";
 import { useRouter } from "next/navigation";
 import { FaChevronLeft } from "react-icons/fa6";
 import Link from "next/link";
-
+import { FaArrowLeftLong } from "react-icons/fa6";
 interface OrderItem {
   id: string;
   name: string;
@@ -35,7 +35,7 @@ const OrdersPage = () => {
     <>
       <div className="w-full fixed top-0 left-0 z-30 grid grid-cols-3 items-center px-3 lg:hidden sm:hidden bg-white h-[50px]">
         <Link href="/account" className="justify-self-start flex items-center">
-          <FaChevronLeft color="gray" />
+          <FaArrowLeftLong color="gray" />
         </Link>
         <div className="col-span-2 flex justify-start">
           <h2 className="font-semibold">My orders</h2>

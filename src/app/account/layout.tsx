@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import "@mantine/core/styles/Checkbox.css";
+// import "@mantine/core/styles/Checkbox.css";
 import Navbar from "@/src/components/Layout/Home/Navbar/Navbar";
 import { MobileNavbar } from "@/src/components/Layout/Home/Navbar/MobileNavbar";
 import {
@@ -13,7 +13,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const showMobileNavbar = pathname === "/account" || pathname === "/";
   return (
     <>
-      <Navbar activeHeading={1} />
+      <Navbar  />
       <SmallDeviceNavbar />
       <div className="bg-[#F8F8F8] min-h-screen">
         <div className=" w-full  lg:w-11/12 mx-auto  bg-[#F8F8F8] gap-6 lg:py-10 lg:mt-10 sm:mt-10 sm:py-10 lg:flex    py-10 ">

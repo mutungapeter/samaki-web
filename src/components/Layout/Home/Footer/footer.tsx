@@ -6,7 +6,7 @@ import { FaLinkedin } from "react-icons/fa6";
 import { MdOutlineShoppingCart } from "react-icons/md";
 const Footer = () => {
   return (
-    <section className="bg-[#F5F5F5] mx-auto ">
+    <section className="bg-[#F5F5F5] mx-auto  hidden md:block ">
       <div className="bg-white  flex-flex-col p-2 py-10 min-h-[100px] ">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 lg:gap-6 sm:gap-8 lg:grid-cols-4 lg:mx-10">
           <div className="">

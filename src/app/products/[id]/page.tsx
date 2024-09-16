@@ -1,8 +1,9 @@
 "use client";
 import { useGetProductDetailsQuery } from "@/redux/queries/products/productsApi";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import ProductDetail from "@/src/components/products/ProductDetails";
+import ProductDetailLayout from "@/src/components/Layout/Products/ProductDetailLayout";
 interface DetailProps {
   params: {
     id: number;
@@ -45,9 +46,13 @@ const ProductPage = ({ params: { id } }: DetailProps) => {
   }, [isSuccess, error, refetch]);
 
   return (
-    <div className="bg-white flex flex-col">
+    <ProductDetailLayout>
+    <Suspense fallback={<div>Loading...</div>}>
+    <div className="bg-white flex flex-col py-6">
       <div className=" ">{data && <ProductDetail data={data} />}</div>
     </div>
+    </Suspense>
+    </ProductDetailLayout>
   );
 };
 export default ProductPage;

@@ -14,10 +14,16 @@ const config: Config = {
         'custom': ['Open Sans', 'Roboto', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
         
       },
+      colors: {
+        primary: '#14532D', 
+        secondary: '#6A9C89', 
+        light: '#C4DAD2'
+          },
+    
     },
   },
   plugins: [
-    // require("flowbite/plugin")
+   
     require('@tailwindcss/aspect-ratio'),
   ],
 };

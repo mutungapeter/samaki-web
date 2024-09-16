@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense, useState } from "react";
-import "@mantine/core/styles/Checkbox.css";
 import Navbar from "@/src/components/Layout/Home/Navbar/Navbar";
 import { MobileNavbar } from "@/src/components/Layout/Home/Navbar/MobileNavbar";
 import {
@@ -25,23 +24,23 @@ const ProductsLayout = ({ children }: { children: React.ReactNode }) => {
   const categoryName = pathname.split("/").pop();
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <>
       <div className="min-h-screen flex bg-[#F8F8F8] flex-col sm:gap-3 gap-2 lg:gap-3">
-        <Navbar activeHeading={1} />
+        <Navbar />
         <ProductsMobile />
-        <div className="bg-[#F8F8F8]  items-center hidden lg:flex sm:flex  w-full min-h-[40px] lg:mt-[75px] mt-0 sm:mt-[75px] lg:w-11/12 mx-auto lg:mx-auto sm:px-2 sm:mx-0">
+        <div className="bg-[#F8F8F8]  items-center hidden lg:flex sm:flex mt-[70px]  w-full min-h-[40px] lg:mt-[75px]  sm:mt-[75px] lg:w-11/12 mx-auto lg:mx-auto sm:px-2 sm:mx-0">
           <div className="flex items-center space-x-3">
             <button
               onClick={() => handleBreadcrumbClick("/")}
               className="text-black font-bold hover:underline hover:text-red-500"
             >
-              Home
+             Home
             </button>
             {categoryName && (
               <>
                 <GoChevronRight size={30} color="gray" />
-                {/* <h2 className="text-gray-600">{categoryName}</h2> */}
-                Search result
+               
+              Products
               </>
             )}
           </div>
@@ -50,7 +49,7 @@ const ProductsLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="w-[50px] lg:w-[400px] sm:w-[400px] sticky lg:top-[10px] top-[10px]   hidden sm:block lg:block">
             <FilterComponent />
           </div>
-          <div className="w-full sm:w-full  lg:mt-0 mt-[75px] sm:mt-0 ">
+          <div className="w-full sm:w-full  lg:mt-0 mt-[0px] sm:mt-0 ">
             {children}
           </div>
         </div>
@@ -58,7 +57,7 @@ const ProductsLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="hidden lg:block sm:block">
         <Footer />
       </div>
-    </Suspense>
+    </>
   );
 };
 

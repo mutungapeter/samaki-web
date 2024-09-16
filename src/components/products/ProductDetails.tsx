@@ -39,10 +39,10 @@ const ProductDetail = ({ data }: Props) => {
   const dispatch = useAppDispatch();
   const [count, setCount] = useState(1);
   const { cart } = useAppSelector((state) => state.cart);
-  
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('cartItems')) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems') as string);
+    if (typeof window !== "undefined" && localStorage.getItem("cartItems")) {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems") as string);
       dispatch(initializeCart(cartItems));
     }
   }, [dispatch]);
@@ -77,7 +77,7 @@ const ProductDetail = ({ data }: Props) => {
     }
   };
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 bg-white p-2 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 bg-white  p-2 md:min-h-[90vh] md:p-6 ">
       <div className="flex justify-center items-center">
         <div className=" w-full h-full max-w-xs">
           <Image
@@ -98,13 +98,13 @@ const ProductDetail = ({ data }: Props) => {
             <span className="font-light text-blue-500">{data.brand}</span>
           </span>
         </div>
-        <div className="flex items-center gap-2 ">
-                <IoAlertCircleOutline />
-                <span>{data?.quantity}</span>
+        <div className="flex items-center gap-2 p-2 md:p-3 ">
+          <IoAlertCircleOutline />
+          <span>{data?.quantity}</span>
 
-                <span> units left </span>
-              </div>
-        <div className="flex flex-col gap-2 p-2 border-b border-gray-300">
+          <span> units left </span>
+        </div>
+        <div className="flex flex-col gap-2 p-2 border-b md:p-3  border-gray-300">
           <span className="text-2xl font-bold  ">
             Ksh {data?.selling_price}
           </span>

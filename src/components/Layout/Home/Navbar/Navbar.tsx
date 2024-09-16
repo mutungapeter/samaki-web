@@ -25,10 +25,8 @@ import { Search } from "../search/SearchInput";
 import { FaChevronLeft } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
 import { useAppSelector } from "@/redux/hooks";
-interface Props {
-  activeHeading: number;
-}
-const NavBar = ({ activeHeading }: Props) => {
+
+const NavBar = () => {
   const { cart } = useAppSelector((state) => state.cart);
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);

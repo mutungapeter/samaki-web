@@ -16,15 +16,10 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { useRouter,useSearchParams } from "next/navigation";
 import { BsExclamationTriangle } from "react-icons/bs";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+
 import toast from "react-hot-toast";
 import Loader from "@/src/components/Loader/Loader";
-import { EditAddress } from "@/src/components/Account/addresses/EditAddress";
+
 import { useAppDispatch } from "@/redux/hooks";
 import { setShippingAddress } from "@/redux/slices/address";
 
@@ -127,6 +122,7 @@ const AddressList = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
+  
   return (
     <>
       {/* small devices */}
@@ -285,21 +281,22 @@ const AddressList = () => {
           <h2>No addresses yet</h2>
         )}
       </div>
-      <Dialog
-        open={modalOpen}
-        onClose={handleCloseModal}
-        className="relative z-50 top-[40px] "
-      >
-        <DialogBackdrop
-          transition
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        />
+      {modalOpen && (
+        <div className="modal fixed z-50 w-full h-full top-0 left-0 flex items-start justify-center">
+          <div
+            className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+            onClick={handleCloseModal}
+          ></div>
 
-        <div className="fixed inset-0 z-10 flex items-center justify-center  overflow-y-auto">
-          <DialogPanel
-            transition
-            className="relative max-h-[50vh] w-full max-w-[90%] lg: max-w[400px] sm:max-w-[400px] overflow-y-auto  bg-white text-left shadow-xl transition-all sm:my-8 rounded-md"
-          >
+          <div className="modal-container bg-white  w-10/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 mt-10 transform transition-all">
+            {/* {isSubmitting && <Spinner />} */}
+            <div className="modal-content py-6 text-left px-6 ">
+              <div className="flex justify-between items-center pb-3">
+                <p className="text-2xl font-bold text-[#1F4772]">
+                 Add Address
+                </p>
+ 
+              </div>
             <div className="bg-white px-4 flex flex-col lg:gap-5 sm:gap-5 gap-3 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="flex space-x-3 items-start">
                 <div className="p-2 rounded-full bg-red-100">
@@ -329,9 +326,10 @@ const AddressList = () => {
                 </h2>
               </div>
             </div>
-          </DialogPanel>
+            </div>
+          </div>
         </div>
-      </Dialog>
+      )}
     </>
   );
 };

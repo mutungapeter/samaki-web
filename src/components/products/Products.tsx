@@ -1,7 +1,7 @@
 "use client";
 import { useGetAllProductsQuery } from "@/redux/queries/products/productsApi";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useGetAllCategoriesQuery } from "@/redux/queries/categories/categoriesApi";
 import clsx from "clsx";
@@ -106,6 +106,8 @@ const Products = () => {
       router.push(`/products/${id}`);
     };
   return (
+    <>
+
     <section className="bg-[#F5F5F5] p-2">
       <div
         className={clsx("grid grid-cols-2 gap-1 lg:gap-3", {
@@ -119,34 +121,30 @@ const Products = () => {
           
           <div
             key={product.id}
-            className="rounded-md  bg-white flex flex-col gap-2 p-3  hover:text-green-500 cursor-pointer hover:shadow-lg transition ease-in-out duration-300"
+            className="rounded-md  bg-white flex flex-col gap-2 p-3   hover:text-green-500 cursor-pointer hover:shadow-lg transition ease-in-out duration-300"
             onClick={() => handleViewDetails(product.id)}
           >
-            <div className="h-[175px] w-full">
-              <Image
-                src={product.image || "/default.png"}
-                height={175}
-                width={200}
-                alt={product.name}
-                className="mx-auto h-full w-full object-cover"
-              />
-            </div>
-            <div className="flex justify-between">
-              <span className="lg:text-[17px] sm:text-[17px] text-xs   font-custom  hover:text-green-500 ">
-                {product.name}
-              </span>
-              <div className="flex flex-col items-baseline">
-                <span className="p-1 rounded-md text-center text-[10px] lg:text-xs sm:text-xs bg-slate-100 text-blue-900">
-                  {product.brand}
-                </span>
-              </div>
-            </div>
+            <div className="w-full h-[200px] rounded-md overflow-hidden">
+        <Image
+          src={product.image || ""}
+          height={200}
+          width={200}
+          alt={product.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
-            <span className="text-xs">rating</span>
+      
+      <div className="flex w-full">
+        <span className="w-full md:text-[14px] text-[13px] font-semibold text-gray-500 font-custom hover:text-green-500">
+          {product.name}
+        </span>
+      </div>
 
-            <span className="lg:text-lg sm:text-xl text-sm font-semibold font-sans text-black hover:text-green-500">
-              KSh {product.selling_price}
-            </span>
+    
+      <span className="md:text-lg text-[12px] font-semibold font-custom hover:text-green-500">
+        KSh {product.selling_price}
+      </span>
           </div>
        
         ))}
@@ -192,6 +190,8 @@ const Products = () => {
         </nav>
       </div>
     </section>
+    </>
+
   );
 };
 

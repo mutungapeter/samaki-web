@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useState } from "react";
-import "@mantine/core/styles/Checkbox.css";
+
 import Navbar from "@/src/components/Layout/Home/Navbar/Navbar";
 import { MobileNavbar } from "@/src/components/Layout/Home/Navbar/MobileNavbar";
 import {

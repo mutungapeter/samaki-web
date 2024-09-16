@@ -144,30 +144,30 @@ export const MobileSearch = () => {
   useOutsideClick(searchRef, () => setSearchData([]));
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 h-[100px] bg-white shadow-lg z-20   flex flex-col gap-2 lg:hidden sm:hidden">
-        <div className="flex items-center justify-between px-4">
+      {/* <div className="fixed top-0 left-0 right-0 h-[70px] bg-white shadow-lg z-20   flex flex-col gap-2 lg:hidden sm:hidden"> */}
+        {/* <div className="flex items-center justify-between px-4">
           <Link href="/">
             <span className="text-[25px] font-bold text-green-900 uppercase">
               Eshop
             </span>
           </Link>
           <MdOutlineShoppingCart size={30} color="text-green-900" />
-        </div>
+        </div> */}
         <div className="flex justify-center items-center ">
           <div
-            className="w-full  px-2  relative  flex items-center"
+            className="w-full   relative  flex items-center"
             ref={searchRef}
           >
             <AiOutlineSearch
               size={20}
-              className="absolute left-5  cursor-pointer text-green-900"
+              className="absolute left-2  cursor-pointer text-green-900"
             />
             <input
               type="text"
-              placeholder="Search for any dish "
+              placeholder="Search  "
               value={searchTerm}
               onChange={handleSearchChange}
-              className="h-[40px] bg-white w-full pl-10 px-2 border-green-900 focus:outline-none focus:bg-white  border-[1px] rounded-sm placeholder-gray-300 placeholder-text-[12px]"
+              className="h-[35px] bg-white w-full pl-10  border-green-500 focus:outline-none focus:bg-white  border-[1px] rounded-md placeholder-gray-300 placeholder-text-[12px]"
             />
 
             {searchTerm.trim() !== "" && (
@@ -200,7 +200,7 @@ export const MobileSearch = () => {
             )}
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

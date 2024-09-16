@@ -20,7 +20,7 @@ export const productsApi = apiSlice.injectEndpoints({
       query: (id: any) => ({
         url: `products/${id}`,
         method: "GET",
-        // credentials: "include" as const,
+      
       }),
     }),
   }),

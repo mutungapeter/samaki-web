@@ -1,10 +1,5 @@
 "use client";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+
 import { GoPlusCircle } from "react-icons/go";
 import { ChangeEvent, useState, useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -129,10 +124,6 @@ export const NewAddress = ({refetchAddresses}:AddAddress) => {
     }
   };
 
-  const selectedSubCountyName = selectedSubCounty?.name || "";
-  const selectedWardName = selectedWard?.name || "";
-  const selectedCountyName = selectedCounty?.name || "";
-
   const handlePickupStationClick = () => {
     setDeliveryOption("Pickup Station");
     if (pickupStationsData && pickupStationsData.length > 0) {
@@ -225,17 +216,24 @@ export const NewAddress = ({refetchAddresses}:AddAddress) => {
       setIsOpen(false);
   
   };
+  const handleOpenModal = () => setIsOpen(true);
+  const handleCloseModal = () => setIsOpen(false);
+  
+  const selectedSubCountyName = selectedSubCounty?.name || "";
+  const selectedWardName = selectedWard?.name || "";
+  const selectedCountyName = selectedCounty?.name || "";
+
   return (
     <>
       <div
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenModal}
         className="items-center bg-green-900 p-2 cursor-pointer rounded-md space-x-2 hidden lg:flex sm:flex"
       >
         <GoPlus color="white" />
         <h2 className="text-white text-xs font-semibold">Add New address</h2>
       </div>
 
-      <Dialog
+      {/* <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
         className="relative z-50 top-[40px] hidden lg:block sm:block"
@@ -250,11 +248,10 @@ export const NewAddress = ({refetchAddresses}:AddAddress) => {
             transition
             className="relative max-h-[100vh] w-full max-w-[900px] overflow-y-auto  bg-white text-left shadow-xl transition-all sm:my-8"
           >
-            {/* Main div */}
+          
 
             <div className="grid grid-cols-1">
-              {/* counties, subcounties, wards */}
-
+             
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center space-x-4">
@@ -270,7 +267,24 @@ export const NewAddress = ({refetchAddresses}:AddAddress) => {
                     >
                       Add address
                     </DialogTitle>
-                  </div>
+                  </div> */}
+                  
+      {isOpen && (
+        <div className="modal fixed z-50 w-full h-full top-0 left-0 flex items-start justify-center">
+          <div
+            className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
+            onClick={handleCloseModal}
+          ></div>
+
+          <div className="modal-container bg-white overflow-y-auto   w-10/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 mt-6 transform transition-all">
+            {/* {isSubmitting && <Spinner />} */}
+            <div className="modal-content py-6 text-left px-6 ">
+              <div className="flex justify-between items-center pb-3">
+                <p className="text-2xl font-bold text-[#1F4772]">
+                 Add Address
+                </p>
+ 
+              </div>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-3">
                       <div className="grid grid-cols-2 gap-5">
@@ -619,12 +633,16 @@ export const NewAddress = ({refetchAddresses}:AddAddress) => {
                       </div>
                     </div>
                   </form>
-                </div>
+                  </div>
+          </div>
+        </div>
+      )}
+                {/* </div>
               </div>
             </div>
           </DialogPanel>
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };

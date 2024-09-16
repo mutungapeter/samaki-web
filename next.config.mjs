@@ -5,8 +5,8 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'http',
-                hostname: '34.173.224.151',
-                port: '8001',
+                hostname: 'web-based-pos.onrender.com',
+                port: '',
                 pathname: '/**',
             },
         ],

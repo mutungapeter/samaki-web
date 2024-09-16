@@ -1,6 +1,6 @@
 
 import { apiSlice } from "@/redux/api/apiSlice";
-import { userLoggedIn, userLoggedOut, userRegistration } from "./authSlice";
+import { userLoggedIn, userLoggedOut } from "./authSlice";
 import Cookies from "js-cookie";
 import React from "react";
 
@@ -26,7 +26,6 @@ export const authApi = apiSlice.injectEndpoints({
             userLoggedIn({
               accessToken: result.data.access,
               refreshToken: result.data.refresh,
-            //   user: result.data.user,
             })
           );
         } catch (error: any) {
@@ -34,11 +33,18 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
-  
+    createAccount: builder.mutation({
+      query: (data) => ({
+        url: `users/register/`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 export const {
  
   useLoginMutation,
+  useCreateAccountMutation,
 
 } = authApi;

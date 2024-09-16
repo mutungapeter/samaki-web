@@ -223,7 +223,7 @@ const CartSingle = ({
 }: CartSingleProps) => {
   const [value, setValue] = useState(data.qty);
 
-  //   console.log("data", data);
+    console.log("data", data);
   useEffect(() => {
     setValue(data.qty);
   }, [data.qty]);

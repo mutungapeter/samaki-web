@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
+
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
 import {
@@ -21,7 +21,7 @@ import { AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaUser } from "react-icons/fa6";
 import { useAppSelector } from "@/redux/hooks";
-
+import React, { useEffect, useState } from "react";
 type MenuItemProps = {
   path: string;
   Icon: React.ElementType;
@@ -45,7 +45,7 @@ const menuItems: MenuItemProps[] = [
 
 const Badge: React.FC<{ count: number }> = ({ count }) => (
     <span 
-       className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 text-xs text-white bg-red-500 rounded-full"
+       className="absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 text-xs text-white bg-green-500 rounded-full"
     >
     {count}
   </span>
@@ -71,11 +71,11 @@ const MobileNavbarMenu = ({ path, Icon, text }: MenuItemProps) => {
         className={`relative flex flex-col items-center ${isActive ? "bg-white" : ""}`}
       >
          <div className="relative">
-          <Icon size={24} color={isActive ? "red" : ""} />
+          <Icon size={24} color={isActive ? "text-primary" : ""} />
           {showBadge && <Badge count={cartCount} />}
         </div>
         <span
-          className={`text-xs font-normal ${isActive ? "text-red-500" : ""}`}
+          className={`text-xs font-normal ${isActive ? "text-primary" : ""}`}
         >
           {text}
         </span>

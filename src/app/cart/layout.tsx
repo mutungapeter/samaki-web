@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense, useState } from "react";
-import "@mantine/core/styles/Checkbox.css";
+
 import Navbar from "@/src/components/Layout/Home/Navbar/Navbar";
 import { MobileNavbar } from "@/src/components/Layout/Home/Navbar/MobileNavbar";
 import {
@@ -19,7 +19,7 @@ const CartLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="min-h-screen  flex bg-[#F8F8F8] flex-col sm:gap-3 gap-2 lg:gap-3">
-        <Navbar activeHeading={1} />
+        <Navbar  />
         <MobileNavbar />
         {children}
       </div>
