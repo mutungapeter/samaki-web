@@ -12,7 +12,7 @@ import Footer from "../components/Layout/Home/Footer/footer";
 import { HomeMobileNavbar } from "../components/Layout/Home/Navbar/homeMobiNav";
 
 const Products = dynamic(
-  () => import("../components/Layout/Home/products/products"),
+  () => import("../components/products/Products"),
   {
     suspense: true,
     loading: () => <div>Loading Products...</div>,

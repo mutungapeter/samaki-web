@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart, initializeCart } from "@/redux/slices/Cart";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { FiPlus } from "react-icons/fi";

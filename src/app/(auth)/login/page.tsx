@@ -34,7 +34,7 @@ const LoginPage = () => {
       const response = await login(data).unwrap();
       const successMessage = response?.message || "Login successful";
       toast.success(successMessage);
-      router.push("/account/address")
+      router.push("/account")
     } catch (error: any) {
 
       if (error?.data?.detail) {
@@ -50,7 +50,7 @@ const LoginPage = () => {
     <div className="bg-[#D6DBDC] h-screen flex items-center justify-center p-4 dark:bg-slate-800">
         <div className="bg-white p-14 shadow-lg rounded-md w-full max-w-lg dark:bg-slate-100">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="text-3xl text-[#1F4772] font-bold capitalize text-center mb-6">
+            <div className="text-3xl text-primary font-bold capitalize text-center mb-6">
               <h3>LOGIN</h3>
             </div>
             <div>
@@ -93,12 +93,12 @@ const LoginPage = () => {
               )}
             </div>
             <div className="sm:flex sm:justify-between inline-block my-6">
-              <div className="text-[#1F4772]">
+              <div className="text-primary">
                 <a href="#">Forgot password?</a>
               </div>
             </div>
             <div>
-              <button type="submit" className="bg-[#1F4772] text-xl text-white font-medium uppercase p-3 rounded-lg w-full opacity-90 hover:opacity-100">
+              <button type="submit" className="bg-primary text-xl text-white font-medium uppercase p-3 rounded-lg w-full opacity-90 hover:opacity-100">
               <span className="text-sm text-center font-light ">
                     {" "}
                     {isSubmitting ? (

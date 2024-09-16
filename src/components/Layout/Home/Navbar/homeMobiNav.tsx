@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-
+import { HiOutlineUser } from "react-icons/hi";
 import Image from "next/image";
 
 import { RxCross1 } from "react-icons/rx";

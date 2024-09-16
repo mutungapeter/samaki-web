@@ -111,8 +111,8 @@ const Products = () => {
     <section className="bg-[#F5F5F5] p-2">
       <div
         className={clsx("grid grid-cols-2 gap-1 lg:gap-3", {
-          "lg:grid-cols-5": isProductRoute,
-          "lg:grid-cols-4": !isProductRoute,
+          "lg:grid-cols-4": isProductRoute,
+          "lg:grid-cols-5": !isProductRoute,
         })}
       >
         {filteredProducts.map((product: Product) => (

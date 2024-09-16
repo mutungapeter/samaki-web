@@ -31,13 +31,9 @@ const menuItems: MenuItemProps[] = [
   { path: "/", Icon: IoHomeOutline, text: "Home" },
   { path: "/account/orders", Icon: IoIosList, text: "orders" },
   { path: "/account/messages", Icon: AiOutlineMessage, text: "Message" },
-  // {
-  //   path: "/cart",
-  //   Icon: MdOutlineShoppingCart,
-  //   text: "cart",
-  // },
+ 
   {
-    path: "/account",
+    path: "/login",
     Icon: FaUser ,
     text: "Account",
   },
