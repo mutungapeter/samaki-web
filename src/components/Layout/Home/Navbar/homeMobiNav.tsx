@@ -81,6 +81,7 @@ export const HomeMobileNavbar = () => {
                 Eshop
               </span>
             </Link>
+            <Link href="/cart">
             <div className="relative">
 
             <MdOutlineShoppingCart size={30} color="text-green-900" />
@@ -90,6 +91,7 @@ export const HomeMobileNavbar = () => {
     {cartCount}
   </span>
               </div>
+            </Link>
           </div>
           <div className="flex justify-center items-center ">
             <div
